@@ -2,7 +2,7 @@
 
 const JobsModel = (sequelize, DataTypes) =>
   sequelize.define("jobs", {
-    usersId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

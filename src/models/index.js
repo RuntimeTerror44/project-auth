@@ -31,12 +31,15 @@ const posts = postsModel(sequelize, DataTypes);
 // const comment = commentsModel(sequelize, DataTypes);
 const jobs = JobsModel(sequelize, DataTypes);
 const user=userModel(sequelize,DataTypes)
+const jobcomments = jobComments(sequelize, DataTypes);
 
 user.hasMany(posts, { foreignKey: "user_id" });
 posts.belongsTo(user, { foreignKey: "user_id" });
+
+jobs.hasMany(jobcomments, { foreignKey: "job_id" });
+jobcomments.belongsTo(jobs, { foreignKey: "job_id" });
 // const comments = commentsModel(sequelize, DataTypes);
 // const jobs = JobsModel(sequelize, DataTypes);
-const jobcomments = jobComments(sequelize, DataTypes);
 
 
 // usersTable.hasMany(posts , {
