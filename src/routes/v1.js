@@ -1,19 +1,18 @@
-'use strict';
+"use strict";
 
 const express = require('express');
 const dataModules = require('../models');
 const {users,posts,jobcomments,jobs}=require('../models/index')
 
-
 const router = express.Router();
 
-router.param('model', (req, res, next) => {
+router.param("model", (req, res, next) => {
   const modelName = req.params.model;
   if (dataModules[modelName]) {
     req.model = dataModules[modelName];
     next();
   } else {
-    next('Invalid Model');
+    next("Invalid Model");
   }
 });
 
@@ -24,7 +23,13 @@ router.put('/:model/:id', handleUpdate);
 router.delete('/:model/:id', handleDelete);
 // router.get('/:model/:id/:model', userPosts);
 router.get('/jobs/:id/jobcomments', jobComments);
+router.get("/users/:id/:model", userRecords);
 
+async function userRecords(req, res) {
+  const userId = parseInt(req.params.id);
+  let userRecord = await users.getUserPosts(userId, req.model.model);
+  res.status(200).json(userRecord);
+}
 
 async function jobComments(req, res) {
   const jobId = parseInt(req.params.id);
@@ -32,11 +37,6 @@ async function jobComments(req, res) {
   res.status(200).json(jcomments);
 }
 
-// async function userPosts(req, res) {
-//   const userId = parseInt(req.params.id);
-//   let userPosts = await users.getUserPosts(userId, posts.model);
-//   res.status(200).json(userPosts);
-// }
 
 
 async function handleGetAll(req, res) {
@@ -46,7 +46,7 @@ async function handleGetAll(req, res) {
 
 async function handleGetOne(req, res) {
   const id = req.params.id;
-  let theRecord = await req.model.get(id)
+  let theRecord = await req.model.get(id);
   res.status(200).json(theRecord);
 }
 
@@ -59,7 +59,7 @@ async function handleCreate(req, res) {
 async function handleUpdate(req, res) {
   const id = req.params.id;
   const obj = req.body;
-  let updatedRecord = await req.model.update(id, obj)
+  let updatedRecord = await req.model.update(id, obj);
   res.status(200).json(updatedRecord);
 }
 
@@ -68,6 +68,5 @@ async function handleDelete(req, res) {
   let deletedRecord = await req.model.delete(id);
   res.status(200).json(deletedRecord);
 }
-
 
 module.exports = router;
