@@ -30,6 +30,14 @@ class DataCollection {
   delete(id) {
     return this.model.destroy({ where: { id } });
   }
+  async getUserPosts(id, model) {
+    let record = await this.model.findOne({
+        where: { id },
+        include: model,
+    });
+    return record;
+}
+
 }
 
 module.exports = DataCollection;
