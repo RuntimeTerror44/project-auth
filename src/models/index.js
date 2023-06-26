@@ -1,9 +1,10 @@
-'use strict';
-const { Sequelize, DataTypes } = require('sequelize');
-const clothesModel = require('./posts/model.js');
-const foodModel = require('./comments/model.js');
-const Collection = require('./data-collection.js');
-const userModel = require('../../src/auth/models/users.js');
+"use strict";
+const { Sequelize, DataTypes } = require("sequelize");
+const clothesModel = require("./posts/model.js");
+const foodModel = require("./comments/model.js");
+const Collection = require("./data-collection.js");
+const userModel = require("../../src/auth/models/users.js");
+const JobsModel = require("./jobs/model");
 const POSTGRESS_URI =
   process.env.NODE_ENV === "test"
     ? "sqlite::memory:"
@@ -22,53 +23,32 @@ let sequelizeOptions =
     : {};
 /////////////////////////////////////////////////////////////////////////////////////MOHANNAD
 
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////Anas
 
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////
-
 
 /////////////////////////////////////////////////////////////////////////////////////Motasem
 
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////Mohammad
 
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////Esraa
-
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////
 let sequelize = new Sequelize(POSTGRESS_URI, sequelizeOptions);
 
 const food = foodModel(sequelize, DataTypes);
 const clothes = clothesModel(sequelize, DataTypes);
-
+const jobs = JobsModel(sequelize, DataTypes);
 module.exports = {
   db: sequelize,
   food: new Collection(food),
   clothes: new Collection(clothes),
   users: userModel(sequelize, DataTypes),
+  jobs: new Collection(jobs),
 };
