@@ -2,7 +2,7 @@
 
 const postsModel = (sequelize, DataTypes) =>
   sequelize.define("posts", {
-    userId: { type: DataTypes.INTEGER, required: true },
+    user_id: { type: DataTypes.INTEGER, required: true },
     paragraph_content: { type: DataTypes.STRING },
     photo_content: { type: DataTypes.STRING },
    
