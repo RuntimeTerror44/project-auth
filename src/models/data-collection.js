@@ -24,7 +24,7 @@ class DataCollection {
   }
 
   update(id, data) {
-    return this.model.findOne({ where: { id } })
+    return this.model.findOne({ where: { id:id } })
       .then(record => record.update(data));
   }
 
