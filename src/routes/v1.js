@@ -2,6 +2,7 @@
 
 const express = require('express');
 const dataModules = require('../models');
+const {users,posts}=require('../models/index')
 
 const router = express.Router();
 
@@ -20,6 +21,15 @@ router.get('/:model/:id', handleGetOne);
 router.post('/:model', handleCreate);
 router.put('/:model/:id', handleUpdate);
 router.delete('/:model/:id', handleDelete);
+router.get('/:model/:id/:model', userPosts);
+
+
+async function userPosts(req, res) {
+  const userId = parseInt(req.params.id);
+  let userPosts = await users.getUserPosts(userId, posts.model);
+  res.status(200).json(userPosts);
+}
+
 
 async function handleGetAll(req, res) {
   let allRecords = await req.model.get();

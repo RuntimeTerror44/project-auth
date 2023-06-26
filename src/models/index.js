@@ -27,13 +27,17 @@ let sequelize = new Sequelize(POSTGRESS_URI, sequelizeOptions);
 const posts = postsModel(sequelize, DataTypes);
 const jobcomments = jobComments(sequelize, DataTypes);
 const comment = commentsModel(sequelize, DataTypes);
-
 const jobs = JobsModel(sequelize, DataTypes);
+const user=userModel(sequelize,DataTypes)
+
+user.hasMany(posts, { foreignKey: "user_id" });
+posts.belongsTo(user, { foreignKey: "user_id" });
 module.exports = {
   db: sequelize,
   comments: new Collection(comment),
   posts: new Collection(posts),
-  users: userModel(sequelize, DataTypes),
+  users:new Collection(user),
   jobcomments: new Collection(jobcomments),
   jobs: new Collection(jobs),
+  userModel:user,
 };
