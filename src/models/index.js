@@ -25,18 +25,20 @@ let sequelizeOptions =
     : {};
 let sequelize = new Sequelize(POSTGRESS_URI, sequelizeOptions);
 
-// const usersTable = userModel(sequelize, DataTypes);
 const posts = postsModel(sequelize, DataTypes);
-// const jobcomments = jobComments(sequelize, DataTypes);
-// const comment = commentsModel(sequelize, DataTypes);
+const jobcomments = jobComments(sequelize, DataTypes);
+const comment = commentsModel(sequelize, DataTypes);
 const jobs = JobsModel(sequelize, DataTypes);
 const user = userModel(sequelize, DataTypes);
 
 user.hasMany(posts, { foreignKey: "user_id" });
 posts.belongsTo(user, { foreignKey: "user_id" });
+
+user.hasMany(jobs, { foreignKey: "user_id" });
+jobs.belongsTo(user, { foreignKey: "user_id" });
+
 // const comments = commentsModel(sequelize, DataTypes);
 // const jobs = JobsModel(sequelize, DataTypes);
-const jobcomments = jobComments(sequelize, DataTypes);
 
 // usersTable.hasMany(posts , {
 //   foreignKey: 'usersId',
@@ -98,6 +100,7 @@ const jobcomments = jobComments(sequelize, DataTypes);
 module.exports = {
   db: sequelize,
   posts: new Collection(posts),
+  comments: new Collection(comment),
   users: new Collection(user),
   jobcomments: new Collection(jobcomments),
   jobs: new Collection(jobs),
