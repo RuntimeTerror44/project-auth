@@ -31,55 +31,52 @@ const comments = commentsModel(sequelize, DataTypes);
 const jobs = JobsModel(sequelize, DataTypes);
 const jobcomments = jobComments(sequelize, DataTypes);
 
-
-usersTable.hasMany(posts , {
-  foreignKey: 'usersId',
-  sourceKey: 'id',
-})
+usersTable.hasMany(posts, {
+  foreignKey: "userId",
+  sourceKey: "id",
+});
 
 posts.belongsTo(usersTable, {
-  foriegnKey: 'usersId',
-  targetKey: 'id',
-})
+  foriegnKey: "userId",
+  targetKey: "id",
+});
 
-posts.hasMany(comments , {
-  foreignKey: 'postsId',
-  sourceKey: 'id',
-})
+// posts.hasMany(comments , {
+//   foreignKey: 'postsId',
+//   sourceKey: 'id',
+// })
 
-comments.belongsTo(usersTable, {
-  foriegnKey: 'usersId',
-  targetKey: 'id',
-})
+// comments.belongsTo(usersTable, {
+//   foriegnKey: 'usersId',
+//   targetKey: 'id',
+// })
 
-comments.belongsTo(posts, {
-  foriegnKey: 'postsId',
-  targetKey: 'id',
-})
+// comments.belongsTo(posts, {
+//   foriegnKey: 'postsId',
+//   targetKey: 'id',
+// })
 
 //////////////////////
 
-jobs.belongsTo(usersTable, {
-  foriegnKey: 'usersId',
-  targetKey: 'id',
-})
+// jobs.belongsTo(usersTable, {
+//   foriegnKey: 'usersId',
+//   targetKey: 'id',
+// })
 
-jobs.hasMany(jobcomments , {
-  foreignKey: 'jobsId',
-  sourceKey: 'id',
-})
+// jobs.hasMany(jobcomments , {
+//   foreignKey: 'jobsId',
+//   sourceKey: 'id',
+// })
 
-jobcomments.belongsTo(usersTable, {
-  foriegnKey: 'usersId',
-  targetKey: 'id',
-})
+// jobcomments.belongsTo(usersTable, {
+//   foriegnKey: 'usersId',
+//   targetKey: 'id',
+// })
 
-jobcomments.belongsTo(jobs, {
-  foriegnKey: 'jobsId',
-  targetKey: 'id',
-})
-
-
+// jobcomments.belongsTo(jobs, {
+//   foriegnKey: 'jobsId',
+//   targetKey: 'id',
+// })
 
 module.exports = {
   db: sequelize,
@@ -88,5 +85,4 @@ module.exports = {
   comments: new Collection(comments),
   jobs: new Collection(jobs),
   jobcomments: new Collection(jobcomments),
-
 };
