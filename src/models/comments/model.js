@@ -3,11 +3,11 @@
 const commentsModel = (sequelize, DataTypes) =>
   sequelize.define("comments", {
     content: { type: DataTypes.STRING, required: true },
-    usersId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    postsId: {
+    post_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

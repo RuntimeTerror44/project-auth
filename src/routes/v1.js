@@ -2,7 +2,7 @@
 
 const express = require('express');
 const dataModules = require('../models');
-const {users,posts,jobcomments,jobs}=require('../models/index')
+const {users,posts,jobcomments,jobs,comments}=require('../models/index')
 
 const router = express.Router();
 
@@ -21,8 +21,8 @@ router.get('/:model/:id', handleGetOne);
 router.post('/:model', handleCreate);
 router.put('/:model/:id', handleUpdate);
 router.delete('/:model/:id', handleDelete);
-// router.get('/:model/:id/:model', userPosts);
 router.get('/jobs/:id/jobcomments', jobComments);
+router.get('/posts/:id/comments', postComments);
 router.get("/users/:id/:model", userRecords);
 
 async function userRecords(req, res) {
@@ -35,6 +35,11 @@ async function jobComments(req, res) {
   const jobId = parseInt(req.params.id);
   let jcomments = await jobs.getUserPosts(jobId, jobcomments.model);
   res.status(200).json(jcomments);
+}
+async function postComments(req, res) {
+  const postId = parseInt(req.params.id);
+  let pcomments = await posts.getUserPosts(postId, comments.model);
+  res.status(200).json(pcomments);
 }
 
 
