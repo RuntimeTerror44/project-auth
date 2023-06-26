@@ -1,11 +1,10 @@
-'use strict';
-const { Sequelize, DataTypes } = require('sequelize');
-const postsModel = require('./posts/model.js');
-// const foodModel = require('./comments/model.js');
-// const clothesModel = require('./posts/model.js');
-const commentsModel = require('./comments/model.js');
-const Collection = require('./data-collection.js');
-const userModel = require('../../src/auth/models/users.js');
+"use strict";
+const { Sequelize, DataTypes } = require("sequelize");
+const postsModel = require("./posts/model.js");
+const commentsModel = require("./comments/model.js");
+const Collection = require("./data-collection.js");
+const userModel = require("../../src/auth/models/users.js");
+const JobsModel = require("./jobs/model");
 const POSTGRESS_URI =
   process.env.NODE_ENV === "test"
     ? "sqlite::memory:"
@@ -24,54 +23,32 @@ let sequelizeOptions =
     : {};
 /////////////////////////////////////////////////////////////////////////////////////MOHANNAD
 
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////Anas
 
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////
-
 
 /////////////////////////////////////////////////////////////////////////////////////Motasem
 
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////Mohammad
 
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////Esraa
 
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////
 let sequelize = new Sequelize(POSTGRESS_URI, sequelizeOptions);
-const posts=postsModel(sequelize,DataTypes)
+const posts = postsModel(sequelize, DataTypes);
 const comment = commentsModel(sequelize, DataTypes);
-// const clothes = clothesModel(sequelize, DataTypes);
 
+const jobs = JobsModel(sequelize, DataTypes);
 module.exports = {
   db: sequelize,
   comments: new Collection(comment),
-  // clothes: new Collection(clothes),
-  posts:new Collection(posts),
+  posts: new Collection(posts),
   users: userModel(sequelize, DataTypes),
+  jobs: new Collection(jobs),
 };
