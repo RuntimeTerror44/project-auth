@@ -7,10 +7,10 @@ sequelize.define("jobcomments",{
     content:{
         type:DataTypes.STRING
     },
-    usersId:{
+    user_id:{
         type:DataTypes.INTEGER
     },
-    jobsId:{
+    job_id:{
         type:DataTypes.INTEGER
     }
 
