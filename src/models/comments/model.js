@@ -3,14 +3,15 @@
 const commentsModel = (sequelize, DataTypes) =>
   sequelize.define("comments", {
     content: { type: DataTypes.STRING, required: true },
-    user_id: {
+    usersId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    post_id: {
+    postsId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
   });
 
 module.exports = commentsModel;
+

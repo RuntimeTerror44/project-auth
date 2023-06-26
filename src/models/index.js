@@ -1,11 +1,12 @@
 "use strict";
 const { Sequelize, DataTypes } = require("sequelize");
 const Collection = require("./data-collection.js");
-const userModel = require("../../src/auth/models/users.js");
-const jobComments = require("./jobcomments/model.js");
 const postsModel = require("./posts/model.js");
 const commentsModel = require("./comments/model.js");
+const userModel = require("../../src/auth/models/users.js");
 const JobsModel = require("./jobs/model");
+const jobComments = require("./jobcomments/model.js");
+
 const POSTGRESS_URI =
   process.env.NODE_ENV === "test"
     ? "sqlite::memory:"
@@ -24,16 +25,68 @@ let sequelizeOptions =
     : {};
 let sequelize = new Sequelize(POSTGRESS_URI, sequelizeOptions);
 
+const usersTable = userModel(sequelize, DataTypes);
 const posts = postsModel(sequelize, DataTypes);
-const jobcomments = jobComments(sequelize, DataTypes);
-const comment = commentsModel(sequelize, DataTypes);
-
+const comments = commentsModel(sequelize, DataTypes);
 const jobs = JobsModel(sequelize, DataTypes);
+const jobcomments = jobComments(sequelize, DataTypes);
+
+
+usersTable.hasMany(posts , {
+  foreignKey: 'usersId',
+  sourceKey: 'id',
+})
+
+posts.belongsTo(usersTable, {
+  foriegnKey: 'usersId',
+  targetKey: 'id',
+})
+
+posts.hasMany(comments , {
+  foreignKey: 'postsId',
+  sourceKey: 'id',
+})
+
+comments.belongsTo(usersTable, {
+  foriegnKey: 'usersId',
+  targetKey: 'id',
+})
+
+comments.belongsTo(posts, {
+  foriegnKey: 'postsId',
+  targetKey: 'id',
+})
+
+//////////////////////
+
+jobs.belongsTo(usersTable, {
+  foriegnKey: 'usersId',
+  targetKey: 'id',
+})
+
+jobs.hasMany(jobcomments , {
+  foreignKey: 'jobsId',
+  sourceKey: 'id',
+})
+
+jobcomments.belongsTo(usersTable, {
+  foriegnKey: 'usersId',
+  targetKey: 'id',
+})
+
+jobcomments.belongsTo(jobs, {
+  foriegnKey: 'jobsId',
+  targetKey: 'id',
+})
+
+
+
 module.exports = {
   db: sequelize,
-  comments: new Collection(comment),
+  users: usersTable,
   posts: new Collection(posts),
-  users: userModel(sequelize, DataTypes),
-  jobcomments: new Collection(jobcomments),
+  comments: new Collection(comments),
   jobs: new Collection(jobs),
+  jobcomments: new Collection(jobcomments),
+
 };
