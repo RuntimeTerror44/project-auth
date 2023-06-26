@@ -48,7 +48,6 @@ const jobs = JobsModel(sequelize, DataTypes);
 module.exports = {
   db: sequelize,
   comments: new Collection(comment),
-  // clothes: new Collection(clothes),
   posts: new Collection(posts),
   users: userModel(sequelize, DataTypes),
   jobs: new Collection(jobs),
