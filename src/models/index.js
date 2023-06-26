@@ -4,6 +4,7 @@ const clothesModel = require('./posts/model.js');
 const foodModel = require('./comments/model.js');
 const Collection = require('./data-collection.js');
 const userModel = require('../../src/auth/models/users.js');
+const jobComments= require('./jobcomments/model.js')
 const POSTGRESS_URI =
   process.env.NODE_ENV === "test"
     ? "sqlite::memory:"
@@ -19,7 +20,8 @@ let sequelizeOptions =
           },
         },
       }
-    : {};
+      : {};
+      let sequelize = new Sequelize(POSTGRESS_URI, sequelizeOptions);
 /////////////////////////////////////////////////////////////////////////////////////MOHANNAD
 
 
@@ -29,8 +31,8 @@ let sequelizeOptions =
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////Anas
-
+///////////////////////////////////////Anas
+const jobcomments= jobComments (sequelize,DataTypes)
 
 
 
@@ -61,7 +63,6 @@ let sequelizeOptions =
 
 
 /////////////////////////////////////////////////////////////////////////////////////
-let sequelize = new Sequelize(POSTGRESS_URI, sequelizeOptions);
 
 const food = foodModel(sequelize, DataTypes);
 const clothes = clothesModel(sequelize, DataTypes);
@@ -71,4 +72,5 @@ module.exports = {
   food: new Collection(food),
   clothes: new Collection(clothes),
   users: userModel(sequelize, DataTypes),
+  jobcomments: new Collection(jobcomments)
 };
