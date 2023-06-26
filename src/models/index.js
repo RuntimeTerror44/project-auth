@@ -27,16 +27,16 @@ let sequelize = new Sequelize(POSTGRESS_URI, sequelizeOptions);
 
 // const usersTable = userModel(sequelize, DataTypes);
 const posts = postsModel(sequelize, DataTypes);
-const jobcomments = jobComments(sequelize, DataTypes);
+// const jobcomments = jobComments(sequelize, DataTypes);
 // const comment = commentsModel(sequelize, DataTypes);
 const jobs = JobsModel(sequelize, DataTypes);
 const user=userModel(sequelize,DataTypes)
 
 user.hasMany(posts, { foreignKey: "user_id" });
 posts.belongsTo(user, { foreignKey: "user_id" });
-const comments = commentsModel(sequelize, DataTypes);
+// const comments = commentsModel(sequelize, DataTypes);
 // const jobs = JobsModel(sequelize, DataTypes);
-// const jobcomments = jobComments(sequelize, DataTypes);
+const jobcomments = jobComments(sequelize, DataTypes);
 
 
 // usersTable.hasMany(posts , {
